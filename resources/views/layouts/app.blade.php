@@ -16,6 +16,12 @@
 
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="{{route('index')}}" class="nav-link active">Accueil</a></li>
+            <li class="nav-item">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="nav-link">Déconnexion</button>
+                </form>
+            </li>
         </ul>
     </header>
     <main class="container">

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Cast\String_;
 use Psy\Readline\Hoa\Console;
+
+use function GuzzleHttp\Promise\all;
 
 class PostController extends Controller
 {
@@ -37,17 +42,20 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $post = new Post();
         $post->created_at = date_default_timezone_get();
         $post->title = $request->input('title');
         $post->description = $request->input('description');
-        $post->slug = $request->input('slug');
+        $post->statut = ($request->input('') == "on") ? 'Published' : 'Unpublished';
+        $post->slug = Str::slug($request->input('title'));
 
         $post->save();
 
-        return view('admin.posts.create', [])->with('success', 'Item created successfully!');
+        session()->flash('success', "L'article a bien été ajouté");
+
+        return redirect()->route('posts.create');
         //
     }
 
@@ -57,9 +65,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $slug)
     {
-        //
+        $post = Post::find($id);
+        return view('admin.posts.show', ['post' => $post]);
     }
 
     /**
@@ -82,19 +91,21 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         $post = Post::find($id);
         $post->updated_at = date_default_timezone_get();
         $post->title = $request->input('title');
+        $post->statut = ($request->input('') == "on") ? 'Published' : 'Unpublished';
         $post->description = $request->input('description');
-        $post->slug = $request->input('slug');
+        $post->slug = Str::slug($request->input('title'));
 
         $post->update();
 
+        session()->flash('success', "L'article a bien été mis à jour");
 
         $posts = Post::latest()->get();
-        return view('admin.posts.index', ['posts' => $posts]);
+        return redirect()->route('posts.index', ['posts' => $posts]);
         //
     }
 
@@ -109,8 +120,10 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
 
+        session()->flash('success', "L'article a bien été éffacé");
+
         $posts = Post::latest()->get();
-        return view('admin.posts.index', ['posts' => $posts]);
+        return redirect()->route('posts.index', ['posts' => $posts]);
 
         //
     }

@@ -9,6 +9,8 @@
         </div>
     </div>
 
+    @include('partials.validation')
+
     <form class="row mb-4" method="post" action="{{route('posts.update',$post->id)}}">
         @method('PUT')
         @csrf
@@ -17,12 +19,15 @@
             <input type="text" class="form-control" name="title" id="title" placeholder="Titre" value="{{$post->title}}" required>
         </div>
         <div class="col">
-            <label class="form-label" for="slug">Slug</label>
-            <input type="text" class="form-control" name="slug" id="slug" placeholder="slug" value="{{$post->slug}}" required>
-        </div>
-        <div class="col">
             <label class="form-label" for="description">Description</label>
             <input type="text" class="form-control" name="description" id="description" placeholder="Description" value="{{$post->description}}" required>
+        </div>
+        <div class="col">
+            <label class="form-label">Statut</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="status" name="statut" checked>
+                <label class="form-check-label" for="status">Publié</label>
+            </div>
         </div>
         
         <div class="col-12">
