@@ -46,7 +46,8 @@ class PostController extends Controller
         $post->slug = $request->input('slug');
 
         $post->save();
-        return view('admin.posts.create', []);
+
+        return view('admin.posts.create', [])->with('success', 'Item created successfully!');
         //
     }
 
@@ -91,7 +92,9 @@ class PostController extends Controller
 
         $post->update();
 
-        return view('admin.posts.index', []);
+
+        $posts = Post::latest()->get();
+        return view('admin.posts.index', ['posts' => $posts]);
         //
     }
 
@@ -106,7 +109,8 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
 
-        return view('admin.posts.index', []);
+        $posts = Post::latest()->get();
+        return view('admin.posts.index', ['posts' => $posts]);
 
         //
     }
