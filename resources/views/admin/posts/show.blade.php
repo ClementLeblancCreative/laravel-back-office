@@ -8,6 +8,10 @@
                 href="{{ route('posts.index') }}">Détails</a>
         </div>
     </div>
+    
+    @if ($post->category)
+    <span class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</span>
+    @endif
     @if (!($post->statut=="Published"))
         <h4>{{$post->statut=="Published"?"Publié":"Non publié"}}</h4>
     @endif

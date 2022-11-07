@@ -14,11 +14,11 @@
     <form class="row mb-4" method="post" action="{{route('posts.update',$post->id)}}">
         @method('PUT')
         @csrf
-        <div class="col">
+        <div class="col-4">
             <label class="form-label" for="title">Titre</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Titre" value="{{$post->title}}" required>
         </div>
-        <div class="col">
+        <div class="col-4">
             <label class="form-label" for="description">Description</label>
             <input type="text" class="form-control" name="description" id="description" placeholder="Description" value="{{$post->description}}" required>
         </div>
@@ -31,6 +31,18 @@
                 @endif> 
                 <label class="form-check-label" for="status">Publié</label>
             </div>
+        </div>
+        <div class="col">
+            <label class="form-label" for="categorie">Categories</label>
+            <select class="form-select"  id="categorie" name="categorie">
+                <option value="">Aucune</option>
+                @foreach ($category as $cat)
+                    <option value="{{$cat->id}}" 
+                        @if ($cat->id == $post->category_id)
+                        selected
+                        @endif>{{$cat->name}}</option> 
+                @endforeach
+              </select>
         </div>
         
         <div class="col-12">

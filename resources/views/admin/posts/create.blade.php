@@ -15,11 +15,11 @@
 
     <form class="row mb-4" method="post" action="{{route('posts.store')}}">
         @csrf
-        <div class="col">
+        <div class="col-4">
             <label class="form-label" for="title">Titre</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Titre" required>
         </div>
-        <div class="col">
+        <div class="col-4">
             <label class="form-label" for="description">Description</label>
             <input type="text" class="form-control" name="description" id="description" placeholder="Description" required>
         </div>
@@ -29,6 +29,15 @@
                 <input class="form-check-input" type="checkbox" id="status" name="statut" checked>
                 <label class="form-check-label" for="status">Publié</label>
             </div>
+        </div>
+        <div class="col">
+            <label class="form-label" for="categorie">Categories</label>
+            <select class="form-select"  id="categorie" name="categorie">
+                <option value="">Aucune</option>
+                @foreach ($category as $cat)
+                    <option value="{{$cat->id}}">{{$cat->name}}</option> 
+                @endforeach
+              </select>
         </div>
         
         <div class="col-12">

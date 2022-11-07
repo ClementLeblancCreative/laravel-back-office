@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -22,8 +23,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->get();
+        $categories = Category::all();
 
-        return view('admin.posts.index', ['posts' => $posts]);
+        return view('admin.posts.index', ['posts' => $posts, 'category' => $categories]);
     }
 
     /**
@@ -33,7 +35,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create', []);
+        $categories = Category::all();
+        return view('admin.posts.create', ['category' => $categories]);
     }
 
     /**
@@ -50,6 +53,7 @@ class PostController extends Controller
         $post->description = $request->input('description');
         $post->statut = ($request->input('statut') == "on") ? 'Published' : 'Unpublished';
         $post->slug = Str::slug($request->input('title'));
+        $post->category_id = $request->input('categorie');
 
         $post->save();
 
@@ -79,8 +83,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::all();
         $post = Post::find($id);
-        return view('admin.posts.edit', ['post' => $post]);
+        return view('admin.posts.edit', ['post' => $post, 'category' => $categories]);
         //
     }
 
@@ -99,7 +104,7 @@ class PostController extends Controller
         $post->statut = ($request->input('statut') == "on") ? 'Published' : 'Unpublished';
         $post->description = $request->input('description');
         $post->slug = Str::slug($request->input('title'));
-
+        $post->category_id = $request->input('categorie');
         $post->update();
 
         session()->flash('success', "L'article a bien été mis à jour");
