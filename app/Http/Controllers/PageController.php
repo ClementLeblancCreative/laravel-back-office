@@ -9,7 +9,7 @@ class pageController extends Controller
     public function home()
     {
 
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->get()->where('statut', 'Published');
         return view('pages.home', ['posts' => $posts, 'origine' => 'Acceuil']);
     }
     //

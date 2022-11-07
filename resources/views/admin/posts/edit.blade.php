@@ -25,7 +25,10 @@
         <div class="col">
             <label class="form-label">Statut</label>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="status" name="statut" checked>
+                <input class="form-check-input" type="checkbox" id="status" name="statut" 
+                @if ($post->statut == 'Published')
+                    checked
+                @endif> 
                 <label class="form-check-label" for="status">Publié</label>
             </div>
         </div>

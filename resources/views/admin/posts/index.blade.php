@@ -15,7 +15,7 @@
         @if (!($posts->isEmpty()))   
             @foreach ( $posts as $post )
                 <div class="d-flex gap-3 w-100 justify-content-between align-items-center">
-                    <a href="{{route('posts.show', [$post->id,$post->slug] )}}" class="list-group-item list-group-item-action d-flex py-3 justify-content-between align-items-center">
+                    <a href="{{route('posts.show', [$post->id,$post->slug,false] )}}" class="list-group-item list-group-item-action d-flex py-3 justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-0">{{$post->title}}</h6>
                             <p class="mb-0 opacity-75">{{$post->description}}</p>
