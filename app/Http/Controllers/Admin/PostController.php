@@ -48,7 +48,7 @@ class PostController extends Controller
         $post->created_at = date_default_timezone_get();
         $post->title = $request->input('title');
         $post->description = $request->input('description');
-        $post->statut = ($request->input('') == "on") ? 'Published' : 'Unpublished';
+        $post->statut = ($request->input('statut') == "on") ? 'Published' : 'Unpublished';
         $post->slug = Str::slug($request->input('title'));
 
         $post->save();
@@ -65,7 +65,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $slug)
+    public function show($id, $slug,)
     {
         $post = Post::find($id);
         return view('admin.posts.show', ['post' => $post]);
@@ -96,7 +96,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->updated_at = date_default_timezone_get();
         $post->title = $request->input('title');
-        $post->statut = ($request->input('') == "on") ? 'Published' : 'Unpublished';
+        $post->statut = ($request->input('statut') == "on") ? 'Published' : 'Unpublished';
         $post->description = $request->input('description');
         $post->slug = Str::slug($request->input('title'));
 

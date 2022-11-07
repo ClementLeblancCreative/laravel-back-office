@@ -8,7 +8,9 @@ class pageController extends Controller
 {
     public function home()
     {
-        return view('pages.home', ['posts' => collect()]);
+
+        $posts = Post::latest()->get();
+        return view('pages.home', ['posts' => $posts, 'origine' => 'Acceuil']);
     }
     //
 }
