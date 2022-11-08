@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\Cast\String_;
 use Psy\Readline\Hoa\Console;
+use Illuminate\Support\Facades\File;
 
 use function GuzzleHttp\Promise\all;
 
@@ -54,6 +55,13 @@ class PostController extends Controller
         $post->statut = ($request->input('statut') == "on") ? 'Published' : 'Unpublished';
         $post->slug = Str::slug($request->input('title'));
         $post->category_id = $request->input('categorie');
+
+
+        if (isset($request->image)) {
+            $imagename = Str::uuid() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imagename);
+            $post->image = $imagename;
+        }
 
         $post->save();
 
@@ -105,6 +113,15 @@ class PostController extends Controller
         $post->description = $request->input('description');
         $post->slug = Str::slug($request->input('title'));
         $post->category_id = $request->input('categorie');
+
+        if (isset($request->image)) {
+            if ($post->image != null)
+                File::delete(public_path('/images/' . $post->image));
+            $imagename = Str::uuid() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imagename);
+            $post->image = $imagename;
+        }
+
         $post->update();
 
         session()->flash('success', "L'article a bien été mis à jour");
@@ -123,6 +140,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        if ($post->image != null)
+            File::delete(public_path('/images/' . $post->image));
         $post->delete();
 
         session()->flash('success', "L'article a bien été éffacé");

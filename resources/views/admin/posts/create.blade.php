@@ -13,7 +13,7 @@
     @include('partials.alert')
     @include('partials.validation')
 
-    <form class="row mb-4" method="post" action="{{route('posts.store')}}">
+    <form class="row g-3 mb-4" method="post" action="{{route('posts.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="col-4">
             <label class="form-label" for="title">Titre</label>
@@ -38,6 +38,11 @@
                     <option value="{{$cat->id}}">{{$cat->name}}</option> 
                 @endforeach
               </select>
+        </div>
+
+        <div class="col-4">
+            <label for="image" class="form-label">Image</label>
+            <input class="form-control" type="file" id="image" name="image" accept="image/png, image/jpeg">
         </div>
         
         <div class="col-12">
