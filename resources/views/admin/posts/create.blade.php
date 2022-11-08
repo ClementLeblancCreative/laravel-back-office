@@ -44,6 +44,15 @@
             <label for="image" class="form-label">Image</label>
             <input class="form-control" type="file" id="image" name="image" accept="image/png, image/jpeg">
         </div>
+
+        <div class="col-4">
+            <label class="form-label" for="tag">Tags</label>
+            <select class="form-select"  id="tag" name="tag[]" multiple>
+                @foreach ($tag as $t)
+                    <option value="{{$t->id}}">{{$t->name}}</option> 
+                @endforeach
+              </select>
+        </div>
         
         <div class="col-12">
             <button type="submit"class="btn btn-primary mt-1">Valider</button>

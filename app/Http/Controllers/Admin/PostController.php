@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\Cast\String_;
@@ -37,7 +38,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', ['category' => $categories]);
+        $tags = Tag::all();
+        return view('admin.posts.create', ['category' => $categories, 'tag' => $tags]);
     }
 
     /**
@@ -48,6 +50,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        dd($request);
         $post = new Post();
         $post->created_at = date_default_timezone_get();
         $post->title = $request->input('title');
@@ -77,7 +80,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $slug,)
+    public function show($id,)
     {
         $post = Post::find($id);
         return view('admin.posts.show', ['post' => $post]);
@@ -93,7 +96,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $post = Post::find($id);
-        return view('admin.posts.edit', ['post' => $post, 'category' => $categories]);
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'category' => $categories, 'tag' => $tags]);
         //
     }
 

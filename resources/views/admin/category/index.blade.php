@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between">
-        <h1 class="mb-4">Les articles creatives: </h1>
+        <h1 class="mb-4">Les catégories creatives: </h1>
         <div>
             <a class="btn btn-primary mt-1" href="{{ route('category.create') }}"><i class="bi bi-plus-lg"></i> Creer</a>
         </div>
@@ -27,7 +27,7 @@
                         <form method="get" action="{{ route('category.destroy', $cat->id )}}">
                             @csrf
                         
-                            <button type="submit" class="btn btn-danger" onclick="if(!confirm('Vouler-vous vraiment supprimer la cat"gorie {{$cat->title}}')){return false}"><i class="bi bi-trash3"></i></button>
+                            <button type="submit" class="btn btn-danger" onclick="if(!confirm('Vouler-vous vraiment supprimer la catégorie {{$cat->title}}')){return false}"><i class="bi bi-trash3"></i></button>
                         </form>
                         <a href="{{ route('category.edit', $cat->id )}}" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
                     </div> 

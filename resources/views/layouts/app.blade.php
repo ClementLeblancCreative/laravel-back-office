@@ -15,6 +15,7 @@
         </a>
 
         <ul class="nav nav-pills">
+            <li class="nav-item mx-3"><a href="{{route('dashboard')}}" class="nav-link active">Dashboard</a></li>
             <li class="nav-item"><a href="{{route('index')}}" class="nav-link active">Accueil</a></li>
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}">

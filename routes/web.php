@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryControler;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\pageController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,21 @@ Route::middleware('auth')->group(function () {
     Route::put('/category/update/{id}', [CategoryControler::class, 'update'])->name('category.update');
 
     Route::get('/category/destroy/{id}', [CategoryControler::class, 'destroy'])->name('category.destroy');
+
+
+    Route::get('/tag', [TagController::class, 'index'])->name('tag.index');
+
+    Route::post('/tag/store', [TagController::class, 'store'])->name('tag.store');
+
+    Route::get('/tag/create', [TagController::class, 'create'])->name('tag.create');
+
+    Route::get('/tag/edit/{id}', [TagController::class, 'edit'])->name('tag.edit');
+
+    Route::get('/tag/show/{id}', [TagController::class, 'show'])->name('tag.show');
+
+    Route::put('/tag/update/{id}', [TagController::class, 'update'])->name('tag.update');
+
+    Route::get('/tag/destroy/{id}', [TagController::class, 'destroy'])->name('tag.destroy');
 });
 
 require __DIR__ . '/auth.php';

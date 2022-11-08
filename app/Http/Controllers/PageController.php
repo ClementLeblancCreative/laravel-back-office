@@ -10,7 +10,7 @@ class pageController extends Controller
     {
 
         $posts = Post::latest()->get()->where('statut', 'Published');
-        return view('pages.home', ['posts' => $posts, 'origine' => 'Acceuil']);
+        return view('pages.home', ['posts' => $posts]);
     }
     //
 }

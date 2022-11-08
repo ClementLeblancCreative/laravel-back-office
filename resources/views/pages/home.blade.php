@@ -20,12 +20,17 @@
             @foreach ( $posts as $post )
                 <div class="d-flex gap-3 w-100 justify-content-between align-items-center">
                     <a href="{{route('posts.show', [$post->id,$post->slug,true] )}}" class="list-group-item list-group-item-action d-flex py-3 justify-content-between align-items-center">
-                        <div>
-                            @if ($post->category)
-                            <span class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</span>
+                        <div class="d-flex">
+                            @if($post->image)
+                                <img src="{{asset('/images/'.$post->image)}}" alt="illustration" width="100" height="100">
                             @endif
-                            <h6 class="mb-0">{{$post->title}}</h6>
-                            <p class="mb-0 opacity-75">{{$post->description}}</p>
+                            <div class="mx-2">
+                                @if ($post->category)
+                                <span class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</span>
+                                @endif
+                                <h6 class="mb-0">{{$post->title}}</h6>
+                                <p class="mb-0 opacity-75">{{$post->description}}</p>
+                            </div>
                         </div>
                         <div class="d-flex align-self-start gap-3">
                             <small class="opacity-50 text-nowrap">{{$post -> created_at}}</small>
