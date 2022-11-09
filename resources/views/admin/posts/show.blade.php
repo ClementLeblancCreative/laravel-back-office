@@ -15,7 +15,7 @@
     </div>
     
     @if ($post->category)
-    <div class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</div>
+    <div class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</div><br>
     @endif
     @foreach ( $post->tags as $tag )
         <span class="badge rounded-pill mb-2"
@@ -26,7 +26,12 @@
     @endforeach
     <br>
     @if($post->image)
-        <img src="{{asset('/images/'.$post->image)}}" alt="illustration">
+    <div class="d-flex">
+        <a class="position-relative h-100 me-3 text-danger text-decoration-none" href="{{route('posts.imagedestroy', $post->id )}}" onclick="if(!confirm('Vouler-vous vraiment supprimer l\'image')){return false}">
+            <img src="{{asset('/images/'.$post->image)}}" alt="illustration">
+            <i class="bi bi-x-lg m-2 mt-1 position-absolute top-0 end-0"></i>
+        </a>
+    </div>
     @endif
     <p>{{$post->description}}</p>
     <p>Crée le {{$post->created_at}}</p> 

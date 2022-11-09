@@ -160,4 +160,24 @@ class PostController extends Controller
 
         //
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function imageDestroy($id)
+    {
+        $post = Post::find($id);
+        if ($post->image != null) {
+            File::delete(public_path('/images/' . $post->image));
+        }
+        $post->image = null;
+        $post->update();
+        session()->flash('success', "L'image à bien été effacé");
+
+        $posts = Post::latest()->get();
+        return redirect()->route('posts.index', ['posts' => $posts]);
+    }
 }

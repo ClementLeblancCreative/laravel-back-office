@@ -46,24 +46,28 @@
         @endforeach
     </div>
     <div class="mx-5 w-25">
-        <div class="card-body p-2 mb-2 border-opacity-50  rounded-start rounded-5 border border-secondary"">
-            <h5 class="card-title">Categories</h5>
-            <p class="card-text">
-            @foreach ($categories as $category)
-                <a href="{{route('searchCategory',$category->id )}}" class="badge rounded-pill bg-info text-dark mb-2 text-decoration-none">{{$category->name}}</a>
-            @endforeach</p>
-        </div>
-        <div class="card-body p-2 mb-2 border-opacity-50 rounded-start rounded-5 border border-secondary"">
-            <h5 class="card-title">Tags</h5>
-            <p class="card-text">
-            @foreach ($tags as $tag)
-                <a class="badge mb-2 rounded-pill text-decoration-none" href="{{route('searchTag',$tag->id )}}"
-                style="background-color: {{$tag->color}}; 
-                color: #{{str_pad(dechex(255-hexdec(substr($tag->color,1,2))), 2, "0", STR_PAD_LEFT)
-                .str_pad(dechex(255-hexdec(substr($tag->color,3,2))), 2, "0", STR_PAD_LEFT)
-                .str_pad(dechex(255-hexdec(substr($tag->color,5,2))), 2, "0", STR_PAD_LEFT)}};"">{{$tag->name}}</a>
-            @endforeach</p>
-        </div>
+        @if(isset($categories))
+            <div class="card-body p-2 mb-2 border-opacity-50  rounded-start rounded-5 border border-secondary"">
+                <h5 class="card-title">Categories</h5>
+                <p class="card-text">
+                @foreach ($categories as $category)
+                    <a href="{{route('searchCategory',$category->id )}}" class="badge rounded-pill bg-info text-dark mb-2 text-decoration-none">{{$category->name}}</a>
+                @endforeach</p>
+            </div>
+        @endif
+        @if(isset($tags))
+            <div class="card-body p-2 mb-2 border-opacity-50 rounded-start rounded-5 border border-secondary"">
+                <h5 class="card-title">Tags</h5>
+                <p class="card-text">
+                @foreach ($tags as $tag)
+                    <a class="badge mb-2 rounded-pill text-decoration-none" href="{{route('searchTag',$tag->id )}}"
+                    style="background-color: {{$tag->color}}; 
+                    color: #{{str_pad(dechex(255-hexdec(substr($tag->color,1,2))), 2, "0", STR_PAD_LEFT)
+                    .str_pad(dechex(255-hexdec(substr($tag->color,3,2))), 2, "0", STR_PAD_LEFT)
+                    .str_pad(dechex(255-hexdec(substr($tag->color,5,2))), 2, "0", STR_PAD_LEFT)}};"">{{$tag->name}}</a>
+                @endforeach</p>
+            </div>
+        @endif
         <a href="{{route('index')}}" class="btn btn-primary">Reset</a>
     </div>
 </div>

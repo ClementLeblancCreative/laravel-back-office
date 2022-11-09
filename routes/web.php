@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+    Route::get('/posts/imagedestroy/{id}', [PostController::class, 'imageDestroy'])->name('posts.imagedestroy');
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
