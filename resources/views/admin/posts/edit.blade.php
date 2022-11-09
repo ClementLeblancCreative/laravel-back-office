@@ -54,7 +54,9 @@
             <label class="form-label" for="tag">Tags</label>
             <select class="form-select"  id="tag" name="tag[]" multiple>
                 @foreach ($tag as $t)
-                    <option value="{{$t->id}}">{{$t->name}}</option> 
+                    <option value="{{$t->id}}" @if (in_array($t->id, old('tag',$post->tags->pluck('id')->toArray())))
+                        selected
+                    @endif>{{$t->name}}</option> 
                 @endforeach
               </select>
         </div>

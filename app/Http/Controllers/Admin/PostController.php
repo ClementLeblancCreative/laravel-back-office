@@ -24,9 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::with('tags')->get();
         $categories = Category::all();
-
         return view('admin.posts.index', ['posts' => $posts, 'category' => $categories]);
     }
 
@@ -50,7 +49,6 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        dd($request);
         $post = new Post();
         $post->created_at = date_default_timezone_get();
         $post->title = $request->input('title');
@@ -59,7 +57,6 @@ class PostController extends Controller
         $post->slug = Str::slug($request->input('title'));
         $post->category_id = $request->input('categorie');
 
-
         if (isset($request->image)) {
             $imagename = Str::uuid() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imagename);
@@ -67,6 +64,10 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        if ($request->input('tag') != null) {
+            $post->tags()->attach($request->input('tag'));
+        }
 
         session()->flash('success', "L'article a bien été ajouté");
 
@@ -82,7 +83,7 @@ class PostController extends Controller
      */
     public function show($id,)
     {
-        $post = Post::find($id);
+        $post = Post::with('tags')->find($id);
         return view('admin.posts.show', ['post' => $post]);
     }
 
@@ -94,8 +95,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::all();
-        $post = Post::find($id);
+        $post = Post::with('tags')->find($id);
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.edit', ['post' => $post, 'category' => $categories, 'tag' => $tags]);
@@ -129,6 +129,10 @@ class PostController extends Controller
 
         $post->update();
 
+
+        if ($request->input('tag') != null) {
+            $post->tags()->sync($request->input('tag'));
+        }
         session()->flash('success', "L'article a bien été mis à jour");
 
         $posts = Post::latest()->get();

@@ -26,8 +26,15 @@
                             @endif
                             <div class="mx-2">
                                 @if ($post->category)
-                                <span class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</span>
+                                <span class="badge rounded-pill bg-info text-dark mb-2">{{$post->category->name}}</span><br>
                                 @endif
+                                @foreach ( $post->tags as $tag )
+                                    <span class="badge rounded-pill mb-2"
+                                    style="background-color: {{$tag->color}}; 
+                                    color: #{{str_pad(dechex(255-hexdec(substr($tag->color,1,2))), 2, "0", STR_PAD_LEFT)
+                                    .str_pad(dechex(255-hexdec(substr($tag->color,3,2))), 2, "0", STR_PAD_LEFT)
+                                    .str_pad(dechex(255-hexdec(substr($tag->color,5,2))), 2, "0", STR_PAD_LEFT)}};"">{{$tag->name}}</span>
+                                @endforeach
                                 <h6 class="mb-0">{{$post->title}}</h6>
                                 <p class="mb-0 opacity-75">{{$post->description}}</p>
                             </div>

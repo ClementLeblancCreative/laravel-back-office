@@ -22,9 +22,9 @@ Route::get('/hello', function () {
     return view('hello');
 });
 
-Route::middleware('auth')->group(function () {
+Route::get('/', [PageController::class, 'home'])->name('index');
 
-    Route::get('/', [PageController::class, 'home'])->name('index');
+Route::middleware('auth')->group(function () {
 
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
