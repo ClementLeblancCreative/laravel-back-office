@@ -7,12 +7,12 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class SearchTagController extends Controller
+class SearchCategorieController extends Controller
 {
-    public function show(Tag $tag)
+    public function show(Category $category)
     {
-        $posts = $tag->posts()->with(['category', 'tags'])
-            ->where('statut', 'Published')
+        $posts = Post::with(['category', 'tags'])
+            ->where(['statut' => 'Published', "category_id" => $category->id])
             ->latest()
             ->get();
         $categories = Category::all();

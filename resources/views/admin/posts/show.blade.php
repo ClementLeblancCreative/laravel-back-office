@@ -4,12 +4,13 @@
     <div class="d-flex justify-content-between">
         <h1 class="mb-4">{{$post->title}} </h1>
         <div>
-            <a class="btn btn-primary mt-1" 
+            <a class="btn btn-primary mt-1" href="
             @if (isset($retour))
-                href="{{ route('index') }}">Retour</a>
+                {{ route('index') }}
             @else
-                href="{{ route('posts.index') }}">Retour</a>
+                {{ route('posts.index') }}
             @endif
+            ">Retour</a>
         </div>
     </div>
     

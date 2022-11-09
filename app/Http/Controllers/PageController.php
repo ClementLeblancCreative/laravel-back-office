@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 
 class pageController extends Controller
 {
@@ -10,7 +12,10 @@ class pageController extends Controller
     {
 
         $posts = Post::with('tags')->latest()->get()->where('statut', 'Published');
-        return view('pages.home', ['posts' => $posts]);
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('pages.home', ['posts' => $posts, 'categories' => $categories, 'tags' => $tags]);
     }
 
     /**
@@ -19,10 +24,10 @@ class pageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($retour, $slug, $id)
     {
         $post = Post::with('tags')->find($id);
-        return view('admin.posts.show', ['post' => $post, 'retourlink' => 'index']);
+        return view('admin.posts.show', ['retour' => 'acceuil', 'post' => $post]);
     }
     //
 }

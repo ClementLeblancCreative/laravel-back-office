@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\CategoryControler;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\pageController;
+use App\Http\Controllers\SearchCategorieController;
+use App\Http\Controllers\SearchTagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,12 @@ Route::get('/hello', function () {
 });
 
 Route::get('/', [PageController::class, 'home'])->name('index');
+
+Route::get('/recherche/tag/{tag}', [SearchTagController::class, 'show'])->name('searchTag');
+
+Route::get('/recherche/categorie/{category}', [SearchCategorieController::class, 'show'])->name('searchCategory');
+
+Route::get('{retour}/{id}-{slug}', [pageController::class, 'show'])->name('index.post');
 
 Route::middleware('auth')->group(function () {
 
